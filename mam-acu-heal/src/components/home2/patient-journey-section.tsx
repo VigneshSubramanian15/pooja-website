@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+import AppointmentCtaLink from './appointment-cta-link'
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as const
 
@@ -90,13 +91,10 @@ export default function PatientJourneySection() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 1, ease: EASE, delay: 1 }}
         >
-          <a
-            href="#appointment"
+          <AppointmentCtaLink
+            buttonName="Start your journey"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-label text-sm font-semibold uppercase tracking-[0.16em] text-on-primary transition-all duration-300 hover:opacity-90"
-          >
-            Start your journey
-            <span className="material-symbols-outlined text-base">arrow_outward</span>
-          </a>
+          />
           <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
             Avg. response within 24 hours
           </p>

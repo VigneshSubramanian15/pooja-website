@@ -50,7 +50,7 @@ export const sendAppointmentToTelegram = createServerFn({ method: 'POST' })
     })
 
     const message = [
-      '🩺 <b>New Arua Consultation Request</b>',
+      '🩺 <b>MAM ACU HEAL - New Consultation Request</b>',
       '',
       `<b>Full Name:</b> <code>${sanitizeText(fullName)}</code>`,
       `<b>Email:</b> <code>${sanitizeText(email)}</code>`,

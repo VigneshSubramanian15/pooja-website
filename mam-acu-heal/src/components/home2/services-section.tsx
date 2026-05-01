@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+import AppointmentCtaLink from './appointment-cta-link'
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as const
 
@@ -167,26 +168,14 @@ export default function ServicesSection() {
                     {s.priceNote}
                   </span>
                 </div>
-                <motion.a
-                  href="#appointment"
-                  whileHover="hover"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    document.getElementById('appointment')?.scrollIntoView({ behavior: 'smooth' })
-                  }}
+                <AppointmentCtaLink
+                  buttonName="Book Appointment"
                   className={`mt-6 inline-flex items-center gap-2 font-label text-xs font-semibold uppercase tracking-[0.18em] ${
                     s.accent
                       ? 'text-on-primary'
                       : 'text-primary'
                   }`}
-                >
-                  Book Appointment
-                  <motion.span
-                    variants={{ hover: { x: 3, y: -3 } }}
-                    transition={{ duration: 0.2, ease: EASE }}
-                    className="material-symbols-outlined text-base"
-                  >arrow_outward</motion.span>
-                </motion.a>
+                />
               </div>
             </motion.article>
           ))}

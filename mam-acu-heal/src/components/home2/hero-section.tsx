@@ -1,5 +1,6 @@
 import { FaWhatsapp } from 'react-icons/fa'
 import { motion } from 'motion/react'
+import AppointmentCtaLink from './appointment-cta-link'
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as const
 
@@ -71,13 +72,10 @@ export default function HeroSection() {
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href="#appointment"
+            <AppointmentCtaLink
+              buttonName="Book for consultation"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-label text-sm font-semibold uppercase tracking-[0.16em] text-on-primary transition-all duration-300 hover:opacity-90"
-            >
-              Book for consultation
-              <span className="material-symbols-outlined text-base">arrow_outward</span>
-            </a>
+            />
             <a
               href="https://wa.me/910000000000"
               target="_blank"

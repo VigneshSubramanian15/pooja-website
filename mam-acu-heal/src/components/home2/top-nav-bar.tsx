@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import AppointmentCtaLink from './appointment-cta-link'
 
 const NAV_LINKS = [
 //   { label: 'Home', href: '#home' },
@@ -66,13 +67,11 @@ export default function TopNavBar() {
         </div>
 
         <div className="flex items-center gap-3">
-          <a
-            href="#appointment"
+          <AppointmentCtaLink
+            buttonName="Book Appointment"
             onClick={(e) => handleNavClick(e, '#appointment')}
-            className="hidden rounded-full bg-primary px-6 py-3 font-label text-xs font-semibold uppercase tracking-[0.18em] text-on-primary transition-all duration-300 hover:opacity-90 md:inline-flex"
-          >
-            Book Appointment
-          </a>
+            className="hidden items-center gap-2 rounded-full bg-primary px-6 py-3 font-label text-xs font-semibold uppercase tracking-[0.18em] text-on-primary transition-all duration-300 hover:opacity-90 md:inline-flex"
+          />
           <button
             type="button"
             aria-label="Toggle menu"
@@ -105,13 +104,11 @@ export default function TopNavBar() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="#appointment"
+              <AppointmentCtaLink
+                buttonName="Book Appointment"
                 onClick={(e) => handleNavClick(e, '#appointment')}
-                className="mt-2 rounded-full bg-primary px-6 py-3 text-center font-label text-xs font-semibold uppercase tracking-[0.18em] text-on-primary"
-              >
-                Book Appointment
-              </a>
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-center font-label text-xs font-semibold uppercase tracking-[0.18em] text-on-primary"
+              />
             </div>
           </motion.div>
         ) : null}
