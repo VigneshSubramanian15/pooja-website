@@ -1,0 +1,121 @@
+import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
+
+const NAV_LINKS = [
+//   { label: 'Home', href: '#home' },
+  { label: 'About us', href: '#about' },
+  { label: 'Services', href: '#services' },
+//   { label: 'Blog', href: '#blog' },
+  { label: 'Contact us', href: '#contact' },
+]
+
+function scrollToSection(href: string) {
+  const id = href.replace('#', '')
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+export default function TopNavBar() {
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    scrollToSection(href)
+    setOpen(false)
+  }
+
+  return (
+    <motion.nav
+      initial={{ y: -72, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? 'bg-surface/90 backdrop-blur-md shadow-[0_4px_60px_rgba(32,26,24,0.06)]'
+          : 'bg-transparent'
+      }`}
+    >
+      <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-6 py-5 md:px-12 md:py-6">
+        <a
+          href="#home"
+          onClick={(e) => handleNavClick(e, '#home')}
+          className="font-headline text-xl font-bold tracking-tight text-primary"
+        >
+          MAM <span className="italic">ACU HEAL</span>
+        </a>
+
+        <div className="hidden items-center gap-8 lg:flex">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="font-label text-sm font-medium tracking-wide text-on-surface/70 transition-colors duration-300 hover:text-primary"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <a
+            href="#appointment"
+            onClick={(e) => handleNavClick(e, '#appointment')}
+            className="hidden rounded-full bg-primary px-6 py-3 font-label text-xs font-semibold uppercase tracking-[0.18em] text-on-primary transition-all duration-300 hover:opacity-90 md:inline-flex"
+          >
+            Book Appointment
+          </a>
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            onClick={() => setOpen((v) => !v)}
+            className="grid h-11 w-11 place-items-center rounded-full border border-outline-variant text-primary lg:hidden"
+          >
+            <span className="material-symbols-outlined">{open ? 'close' : 'menu'}</span>
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="overflow-hidden border-t border-outline-variant/40 bg-surface lg:hidden"
+          >
+            <div className="mx-auto flex max-w-[1440px] flex-col gap-1 px-6 py-4">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="rounded-md px-3 py-3 font-label text-sm font-medium text-on-surface/80 hover:bg-surface-container hover:text-primary"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href="#appointment"
+                onClick={(e) => handleNavClick(e, '#appointment')}
+                className="mt-2 rounded-full bg-primary px-6 py-3 text-center font-label text-xs font-semibold uppercase tracking-[0.18em] text-on-primary"
+              >
+                Book Appointment
+              </a>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </motion.nav>
+  )
+}
