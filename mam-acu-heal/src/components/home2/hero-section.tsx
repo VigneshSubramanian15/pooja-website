@@ -1,18 +1,18 @@
-import { FaWhatsapp } from 'react-icons/fa'
-import { motion } from 'motion/react'
-import AppointmentCtaLink from './appointment-cta-link'
+import { FaWhatsapp } from "react-icons/fa";
+import { motion } from "motion/react";
+import AppointmentCtaLink from "./appointment-cta-link";
 
-const EASE = [0.25, 0.46, 0.45, 0.94] as const
+const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 
 const textVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.1 } },
-}
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
-}
+};
 
 export default function HeroSection() {
   return (
@@ -26,13 +26,13 @@ export default function HeroSection() {
         className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage:
-            'linear-gradient(to right, #511416 1px, transparent 1px), linear-gradient(to bottom, #511416 1px, transparent 1px)',
-          backgroundSize: '64px 64px',
+            "linear-gradient(to right, #511416 1px, transparent 1px), linear-gradient(to bottom, #511416 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
           maskImage:
-            'radial-gradient(ellipse at center, black 40%, transparent 75%)',
+            "radial-gradient(ellipse at center, black 40%, transparent 75%)",
         }}
-        animate={{ backgroundPosition: ['0px 64px', '64px 0px'] }}
-        transition={{ duration: 5, ease: 'linear', repeat: Infinity }}
+        animate={{ backgroundPosition: ["0px 64px", "64px 0px"] }}
+        transition={{ duration: 5, ease: "linear", repeat: Infinity }}
       />
 
       <div className="relative mx-auto grid w-full max-w-[1440px] grid-cols-1 items-center gap-14 lg:grid-cols-12">
@@ -71,13 +71,16 @@ export default function HeroSection() {
             of your health concerns.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-4">
+          <motion.div
+            variants={fadeUp}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
             <AppointmentCtaLink
-              buttonName="Book for consultation"
+              buttonName="Book Appointment"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-label text-sm font-semibold uppercase tracking-[0.16em] text-on-primary transition-all duration-300 hover:opacity-90"
             />
             <a
-              href="https://wa.me/910000000000"
+              href="https://wa.me/919952390110?text=Hi%2C%20I%20visited%20your%20website%20and%20would%20like%20to%20know%20more%20about%20your%20services."
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-primary/30 px-7 py-4 font-label text-sm font-semibold uppercase tracking-[0.16em] text-primary transition-all duration-300 hover:bg-primary/5"
@@ -95,13 +98,17 @@ export default function HeroSection() {
               <dt className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
                 Experience
               </dt>
-              <dd className="mt-1 font-headline text-2xl text-primary">8+ yrs</dd>
+              <dd className="mt-1 font-headline text-2xl text-primary">
+                8+ yrs
+              </dd>
             </div>
             <div>
               <dt className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
                 Patients
               </dt>
-              <dd className="mt-1 font-headline text-2xl text-primary">3,200+</dd>
+              <dd className="mt-1 font-headline text-2xl text-primary">
+                3,200+
+              </dd>
             </div>
             <div>
               <dt className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
@@ -143,5 +150,5 @@ export default function HeroSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

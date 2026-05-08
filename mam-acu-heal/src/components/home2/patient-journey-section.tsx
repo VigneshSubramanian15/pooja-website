@@ -1,30 +1,30 @@
-import { motion } from 'motion/react'
-import AppointmentCtaLink from './appointment-cta-link'
+import { motion } from "motion/react";
+import AppointmentCtaLink from "./appointment-cta-link";
 
-const EASE = [0.25, 0.46, 0.45, 0.94] as const
+const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 
 const STEPS = [
   {
-    title: 'Book an Appointment',
-    body: 'Pick a time that suits you. Reserve a slot via the form, WhatsApp, or a phone call.',
-    icon: 'event_available',
+    title: "Book an Appointment",
+    body: "Pick a time that suits you. Reserve a slot via the form, WhatsApp, or a phone call.",
+    icon: "event_available",
   },
   {
-    title: 'Initial Consultation',
-    body: 'Pulse diagnosis and a thorough health-history review to map the root cause.',
-    icon: 'stethoscope',
+    title: "Initial Consultation",
+    body: "Pulse diagnosis and a thorough health-history review to map the root cause.",
+    icon: "stethoscope",
   },
   {
-    title: 'Acupuncture Sessions',
-    body: 'A protocol tailored to you — basic or advance — delivered with WHO-compliant safety.',
-    icon: 'spa',
+    title: "Acupuncture Sessions",
+    body: "A protocol tailored to you — basic or advance — delivered with WHO-compliant safety.",
+    icon: "spa",
   },
   {
-    title: 'Progress Monitoring',
-    body: 'Regular reviews and adjustments so the plan evolves with your recovery.',
-    icon: 'monitor_heart',
+    title: "Progress Monitoring",
+    body: "Regular reviews and adjustments so the plan evolves with your recovery.",
+    icon: "monitor_heart",
   },
-]
+];
 
 export default function PatientJourneySection() {
   return (
@@ -34,7 +34,7 @@ export default function PatientJourneySection() {
           className="mb-16 max-w-3xl"
           initial={{ opacity: 0, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, ease: EASE }}
         >
           <span className="font-label text-xs uppercase tracking-[0.22em] text-on-surface-variant">
@@ -44,8 +44,8 @@ export default function PatientJourneySection() {
             The path to <span className="italic">recovery.</span>
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-on-surface-variant">
-            Four clear steps — from the first conversation to lasting
-            relief. No guesswork, no rushed appointments.
+            Four clear steps — from the first conversation to lasting relief. No
+            guesswork, no rushed appointments.
           </p>
         </motion.div>
 
@@ -55,7 +55,7 @@ export default function PatientJourneySection() {
               key={step.title}
               initial={{ opacity: 0, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
+              viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 1, ease: EASE, delay: i * 0.2 }}
               className="relative flex flex-col rounded-sm border border-outline-variant/60 bg-surface p-7 transition-all duration-300 hover:border-primary/40"
             >
@@ -88,11 +88,11 @@ export default function PatientJourneySection() {
           className="mt-14 flex flex-wrap items-center gap-4"
           initial={{ opacity: 0, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 1, ease: EASE, delay: 1 }}
         >
           <AppointmentCtaLink
-            buttonName="Start your journey"
+            buttonName="Book Appointment"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-label text-sm font-semibold uppercase tracking-[0.16em] text-on-primary transition-all duration-300 hover:opacity-90"
           />
           <p className="font-label text-xs uppercase tracking-widest text-on-surface-variant">
@@ -101,5 +101,5 @@ export default function PatientJourneySection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
