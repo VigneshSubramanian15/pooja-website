@@ -1,6 +1,6 @@
-import { motion } from 'motion/react'
+import { motion } from "motion/react";
 
-const EASE = [0.25, 0.46, 0.45, 0.94] as const
+const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 0 },
@@ -9,74 +9,71 @@ const fadeUp = {
     y: 0,
     transition: { duration: 0.5, ease: EASE, delay: i * 0.09 },
   }),
-}
+};
 
 const REASONS = [
   {
-    title: '8+ Years of Excellence',
-    body: 'Proven track record in chronic disease management with measurable patient outcomes.',
-    icon: 'workspace_premium',
+    title: "8+ Years of Excellence",
+    body: "Proven track record in chronic disease management with measurable patient outcomes.",
+    icon: "workspace_premium",
   },
   {
-    title: 'Integrated Diagnostics',
-    body: 'Combining traditional acupuncture with modern lab support for deeper insight.',
-    icon: 'biotech',
+    title: "Integrated Diagnostics",
+    body: "Combining traditional acupuncture with modern lab support for deeper insight.",
+    icon: "biotech",
   },
   {
-    title: 'Patient-Centric Care',
-    body: 'Personalized treatment protocols designed for long-term recovery, not quick fixes.',
-    icon: 'favorite',
+    title: "Patient-Centric Care",
+    body: "Personalized treatment protocols designed for long-term recovery, not quick fixes.",
+    icon: "favorite",
   },
   {
-    title: 'Safety First',
-    body: 'WHO-compliant hygiene standards and single-use sterile needles for every session.',
-    icon: 'verified_user',
+    title: "Safety First",
+    body: "WHO-compliant hygiene standards and single-use sterile needles for every session.",
+    icon: "verified_user",
   },
-]
+];
 
 const REVIEWS = [
   {
-    name: 'Priya R.',
+    name: "Margret P.",
     rating: 5,
-    body: 'Six months of back pain gone after the third session. The diagnosis was incredibly thorough.',
-    date: '2 weeks ago',
+    body: "I am currently undergoing treatment here, and Sir takes such good care of me. He radiates so much positive energy, and I believe that is why everything will turn out well. This is the truth - I have truly felt it.",
+    date: "8 months ago",
   },
   {
-    name: 'Karthik S.',
+    name: "Sujitha Sophy",
     rating: 5,
-    body: 'Finally a clinic that explains the why. My migraines have reduced from weekly to once a month.',
-    date: '1 month ago',
+    body: "I am a dentist and had severe cervical spondylitis. I went for only one sitting and got completely cured. Felt so relaxed with cupping and reflexology. They have separate specialists for both male and female, which is convenient. Good place and excellent treatment.",
+    date: "2 years ago",
   },
   {
-    name: 'Anitha M.',
+    name: "Kavi Alagan",
     rating: 5,
-    body: 'Calm space, professional team. My PCOS symptoms have meaningfully improved.',
-    date: '1 month ago',
+    body: "I took treatment for detoxification for two sittings. My body feels relaxed and the recovery is very effective. Thank you for your valuable treatment.",
+    date: "3 years ago",
   },
   {
-    name: 'Ravi K.',
+    name: "Arjun",
     rating: 5,
-    body: 'I was skeptical about acupuncture. Three sessions later, I am a believer. Sleep is back.',
-    date: '2 months ago',
+    body: "Good place for treatment without drugs, acupuncture treatment is too good and it works.",
+    date: "3 years ago",
   },
-  {
-    name: 'Divya L.',
-    rating: 5,
-    body: 'They actually listen. My stress and digestion both have a treatment plan I can follow.',
-    date: '3 months ago',
-  },
-]
+];
 
 export default function WhyUsSection() {
   return (
-    <section id="about" className="bg-surface-container-low px-6 py-24 md:px-12 md:py-32">
+    <section
+      id="about"
+      className="bg-surface-container-low px-6 py-24 md:px-12 md:py-32"
+    >
       <div className="mx-auto max-w-[1440px]">
         <div className="mb-14 grid grid-cols-1 items-end gap-8 lg:grid-cols-12">
           <motion.div
             className="lg:col-span-7"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, ease: EASE }}
           >
             <span className="font-label text-xs uppercase tracking-[0.22em] text-on-surface-variant">
@@ -92,7 +89,7 @@ export default function WhyUsSection() {
             className="max-w-md text-base leading-relaxed text-on-surface-variant lg:col-span-5"
             initial={{ opacity: 0, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, ease: EASE, delay: 0.12 }}
           >
             We pair classical Chinese medicine with modern diagnostics to
@@ -110,7 +107,7 @@ export default function WhyUsSection() {
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true, margin: '-60px' }}
+                viewport={{ once: true, margin: "-60px" }}
                 className="group relative overflow-hidden rounded-sm border border-outline-variant/60 bg-surface p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-[0_20px_40px_-20px_rgba(81,20,22,0.25)]"
               >
                 <span className="material-symbols-outlined mb-5 text-3xl text-primary">
@@ -134,21 +131,23 @@ export default function WhyUsSection() {
             className="lg:col-span-5"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
+            viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.55, ease: EASE, delay: 0.15 }}
           >
             <div className="flex h-full flex-col rounded-sm border border-outline-variant/60 bg-surface">
               <div className="flex items-center justify-between border-b border-outline-variant/60 px-6 py-4">
                 <div className="flex items-center gap-3">
                   <span className="grid h-8 w-8 place-items-center rounded-full bg-surface-container">
-                    <span className="font-headline text-sm font-bold text-primary">G</span>
+                    <span className="font-headline text-sm font-bold text-primary">
+                      G
+                    </span>
                   </span>
                   <div>
                     <p className="font-headline text-sm font-semibold text-on-surface">
                       Google Reviews
                     </p>
                     <p className="font-label text-[11px] uppercase tracking-widest text-on-surface-variant">
-                      4.9 · 320+ reviews
+                      5 ★ - 10+ reviews
                     </p>
                   </div>
                 </div>
@@ -172,7 +171,7 @@ export default function WhyUsSection() {
                       </span>
                     </header>
                     <p className="mb-2 text-sm text-primary">
-                      {'★'.repeat(rev.rating)}
+                      {"★".repeat(rev.rating)}
                     </p>
                     <p className="text-sm leading-relaxed text-on-surface-variant">
                       {rev.body}
@@ -185,5 +184,5 @@ export default function WhyUsSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
