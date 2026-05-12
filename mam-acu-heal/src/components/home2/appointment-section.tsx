@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import AppointmentForm from "./appointment-form";
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -88,11 +89,11 @@ export default function AppointmentSection() {
             title="Book an appointment"
             className="h-[600px] w-full border-0"
           /> */}
-
-          <iframe
+          <AppointmentForm />
+          {/* <iframe
             src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1B3kDZbeddYBwD4Tw_Sx1bLzasLUooEvH9stP9BmkFlbmvmgKkVs1Mar98ByOfzJ3TOxlWVDtG?gv=true"
             className="h-[600px] w-full border-0"
-          ></iframe>
+          ></iframe> */}
         </motion.div>
       </div>
     </section>
