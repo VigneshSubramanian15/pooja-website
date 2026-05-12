@@ -17,10 +17,15 @@ export default function AppointmentForm() {
     fullName: "",
     email: "",
     primaryConcern: "Pain Management",
+    otherConcern: "",
     preferredTime: "Morning (8am - 12pm)",
     additionalNotes: "",
   });
-  const [formErrors, setFormErrors] = useState({ fullName: "", email: "" });
+  const [formErrors, setFormErrors] = useState({
+    fullName: "",
+    email: "",
+    primaryConcern: "",
+  });
   const formCardRef = useRef<HTMLFormElement>(null);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const submitAppointment = useServerFn(sendAppointmentToTelegram);
@@ -32,8 +37,16 @@ export default function AppointmentForm() {
   ) => {
     const { name, value } = event.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
+    if (name === "primaryConcern" && value !== "Other") {
+      setFormValues((prev) => ({ ...prev, otherConcern: "" }));
+      setFormErrors((prev) => ({ ...prev, primaryConcern: "" }));
+      return;
+    }
     if (name === "fullName" || name === "email") {
       setFormErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+    if (name === "otherConcern") {
+      setFormErrors((prev) => ({ ...prev, primaryConcern: "" }));
     }
   };
 
@@ -42,16 +55,22 @@ export default function AppointmentForm() {
     setStatusMessage("");
     setStatusType("");
 
-    const nextErrors = { fullName: "", email: "" };
+    const nextErrors = { fullName: "", email: "", primaryConcern: "" };
     const trimmedName = formValues.fullName.trim();
     const trimmedEmail = formValues.email.trim();
+    const resolvedPrimaryConcern =
+      formValues.primaryConcern === "Other"
+        ? formValues.otherConcern.trim()
+        : formValues.primaryConcern.trim();
 
     if (!trimmedName) nextErrors.fullName = "Full name is required.";
     if (!trimmedEmail) nextErrors.email = "Email is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail))
       nextErrors.email = "Enter a valid email address.";
+    if (!resolvedPrimaryConcern)
+      nextErrors.primaryConcern = "Please enter your primary concern.";
 
-    if (nextErrors.fullName || nextErrors.email) {
+    if (nextErrors.fullName || nextErrors.email || nextErrors.primaryConcern) {
       setFormErrors(nextErrors);
       return;
     }
@@ -62,7 +81,7 @@ export default function AppointmentForm() {
         data: {
           fullName: trimmedName,
           email: trimmedEmail,
-          primaryConcern: formValues.primaryConcern.trim(),
+          primaryConcern: resolvedPrimaryConcern,
           preferredTime: formValues.preferredTime.trim(),
           additionalNotes: formValues.additionalNotes.trim(),
         },
@@ -71,10 +90,11 @@ export default function AppointmentForm() {
         fullName: "",
         email: "",
         primaryConcern: "Pain Management",
+        otherConcern: "",
         preferredTime: "Morning (8am - 12pm)",
         additionalNotes: "",
       });
-      setFormErrors({ fullName: "", email: "" });
+      setFormErrors({ fullName: "", email: "", primaryConcern: "" });
       setStatusType("success");
       setStatusMessage("Your request has been submitted successfully.");
       const formBounds = formCardRef.current?.getBoundingClientRect();
@@ -147,18 +167,48 @@ export default function AppointmentForm() {
           <label className="font-label text-[11px] uppercase tracking-widest text-on-surface-variant">
             Primary Concern
           </label>
-          <select
-            className="border-0 border-b border-outline-variant/60 bg-transparent px-0 py-3 text-on-surface transition-all focus:border-primary focus:ring-0"
-            name="primaryConcern"
-            onChange={handleFieldChange}
-            value={formValues.primaryConcern}
-          >
-            <option value="Pain Management">Pain Management</option>
-            <option value="Stress Anxiety">Stress &amp; Anxiety</option>
-            <option value="Digestive Health">Digestive Health</option>
-            <option value="Women Health">Women's Health</option>
-            <option value="General Wellness">General Wellness</option>
-          </select>
+          {formValues.primaryConcern === "Other" ? (
+            <>
+              <input
+                className="border-0 border-b border-outline-variant/60 bg-transparent px-0 py-3 transition-all placeholder:text-on-surface-variant/30 focus:border-primary focus:ring-0"
+                name="otherConcern"
+                onChange={handleFieldChange}
+                placeholder="Type your concern"
+                type="text"
+                value={formValues.otherConcern}
+              />
+              <button
+                type="button"
+                className="w-fit text-[11px] uppercase tracking-widest text-primary transition-opacity hover:opacity-80"
+                onClick={() =>
+                  setFormValues((prev) => ({
+                    ...prev,
+                    primaryConcern: "Pain Management",
+                    otherConcern: "",
+                  }))
+                }
+              >
+                Use dropdown options
+              </button>
+            </>
+          ) : (
+            <select
+              className="border-0 border-b border-outline-variant/60 bg-transparent px-0 py-3 text-on-surface transition-all focus:border-primary focus:ring-0"
+              name="primaryConcern"
+              onChange={handleFieldChange}
+              value={formValues.primaryConcern}
+            >
+              <option value="Pain Management">Pain Management</option>
+              <option value="Stress Anxiety">Stress &amp; Anxiety</option>
+              <option value="Digestive Health">Digestive Health</option>
+              <option value="Women Health">Women's Health</option>
+              <option value="General Wellness">General Wellness</option>
+              <option value="Other">Other</option>
+            </select>
+          )}
+          {formErrors.primaryConcern ? (
+            <span className="text-xs text-error">{formErrors.primaryConcern}</span>
+          ) : null}
         </div>
 
         <div className="flex flex-col gap-2">
