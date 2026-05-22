@@ -17,7 +17,7 @@ const SERVICES = [
   },
   {
     tier: 'Basic',
-    tag: 'Most chosen',
+    tag: 'Individual session',
     description:
       'Single-modality session for targeted relief from a specific concern.',
     items: [
@@ -28,6 +28,23 @@ const SERVICES = [
     ],
     duration: '20 – 30 mins',
     price: '₹500',
+    priceNote: 'per session',
+    accent: false,
+  },
+  {
+    tier: 'Standard',
+    tag: 'Combo session',
+    description:
+      'Choose any two therapies in a single session — targeted relief, doubled up.',
+    items: [
+      'Classic Acupuncture',
+      'Cupping & Moxibustion',
+      'Chiropractic',
+      'Foot Reflexology',
+    ],
+    itemsNote: 'Pick any 2 of the above',
+    duration: '40 – 55 mins',
+    price: '₹1,000',
     priceNote: 'per session',
     accent: true,
   },
@@ -74,12 +91,12 @@ export default function ServicesSection() {
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.5, ease: EASE, delay: 0.12 }}
           >
-            Three thoughtfully designed tiers — from a guided first
+            Four thoughtfully designed tiers — from a guided first
             consultation to a full integrative recovery session.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           {SERVICES.map((s, i) => (
             <motion.article
               key={s.tier}
@@ -139,6 +156,15 @@ export default function ServicesSection() {
                   </li>
                 ))}
               </ul>
+              {'itemsNote' in s && s.itemsNote && (
+                <p
+                  className={`-mt-4 mb-8 text-sm italic ${
+                    s.accent ? 'text-on-primary/70' : 'text-on-surface-variant'
+                  }`}
+                >
+                  {s.itemsNote}
+                </p>
+              )}
 
               <div
                 className={`mt-auto border-t pt-6 ${

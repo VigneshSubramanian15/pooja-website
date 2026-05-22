@@ -73,13 +73,6 @@ export default function PatientJourneySection() {
               <p className="text-sm leading-relaxed text-on-surface-variant">
                 {step.body}
               </p>
-
-              {i < STEPS.length - 1 ? (
-                <span
-                  aria-hidden
-                  className="absolute -right-3 top-1/2 hidden h-px w-6 -translate-y-1/2 bg-outline-variant lg:block"
-                />
-              ) : null}
             </motion.li>
           ))}
         </ol>
