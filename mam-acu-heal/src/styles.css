@@ -28,6 +28,8 @@
   --color-primary-fixed: #ffdad8;
   --color-on-tertiary-container: #b1ac9f;
   --color-surface-container-low: #fef1ed;
+  --color-service-tier-basic: #fae5e1;
+  --color-service-tier-standard: #f2ccc6;
   --color-surface-dim: #e4d7d4;
   --color-surface: #fff8f6;
   --color-primary-fixed-dim: #ffb3b0;
@@ -71,6 +73,15 @@ body {
   font-family: "Source Sans 3", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+#home,
+#about,
+#services,
+#faq,
+#appointment,
+#contact {
+  scroll-margin-top: 5.5rem;
 }
 
 .material-symbols-outlined {

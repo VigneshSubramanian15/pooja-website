@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import AppointmentCtaLink from "./appointment-cta-link";
 import Logo from "./logo";
@@ -8,18 +8,23 @@ const NAV_LINKS = [
   { label: "About us", href: "#about" },
   { label: "Services", href: "#services" },
   //   { label: 'Blog', href: '#blog' },
-  { label: "Contact us", href: "#contact" },
+  { label: "Contact us", href: "#appointment" },
 ];
+
+const MOBILE_MENU_CLOSE_MS = 280;
 
 function scrollToSection(href: string) {
   const id = href.replace("#", "");
   const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (!el) return;
+
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 export default function TopNavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pendingScrollRef = useRef<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -28,13 +33,32 @@ export default function TopNavBar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (open || !pendingScrollRef.current) return;
+
+    const href = pendingScrollRef.current;
+    pendingScrollRef.current = null;
+
+    const timer = window.setTimeout(() => {
+      requestAnimationFrame(() => scrollToSection(href));
+    }, MOBILE_MENU_CLOSE_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [open]);
+
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
     e.preventDefault();
+
+    if (open) {
+      pendingScrollRef.current = href;
+      setOpen(false);
+      return;
+    }
+
     scrollToSection(href);
-    setOpen(false);
   };
 
   return (

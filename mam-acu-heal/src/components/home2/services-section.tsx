@@ -3,7 +3,37 @@ import AppointmentCtaLink from './appointment-cta-link'
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as const
 
-const SERVICES = [
+type ServiceVariant = 'consultation' | 'basic' | 'standard' | 'advance'
+
+const TIER_CARD_STYLES: Record<ServiceVariant, string> = {
+  consultation:
+    'border-outline-variant/50 bg-surface-container-low hover:border-primary/30 hover:shadow-[0_24px_48px_-28px_rgba(81,20,22,0.28)]',
+  basic:
+    'border-outline-variant/50 bg-service-tier-basic hover:border-primary/30 hover:shadow-[0_24px_48px_-28px_rgba(81,20,22,0.3)]',
+  standard:
+    'z-10 border-primary/25 bg-service-tier-standard shadow-[0_28px_56px_-32px_rgba(81,20,22,0.35)] hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_36px_64px_-28px_rgba(81,20,22,0.42)]',
+  advance:
+    'border-primary/80 bg-gradient-to-br from-primary-container via-primary to-[#3d0509] text-on-primary shadow-[0_32px_64px_-24px_rgba(81,20,22,0.55)] hover:-translate-y-1 hover:shadow-[0_40px_72px_-28px_rgba(81,20,22,0.6)]',
+}
+
+const TIER_ACCENT_STYLES: Record<ServiceVariant, string> = {
+  consultation: 'from-surface-container-low via-primary/20 to-primary/35',
+  basic: 'from-service-tier-basic via-primary/30 to-primary/45',
+  standard: 'from-service-tier-standard via-primary/45 to-primary/65',
+  advance: 'from-primary-fixed/40 via-primary-fixed/20 to-transparent',
+}
+
+const SERVICES: Array<{
+  tier: string
+  tag: string
+  description: string
+  items: string[]
+  itemsNote?: string
+  duration: string
+  price: string
+  priceNote: string
+  variant: ServiceVariant
+}> = [
   {
     tier: 'Consultation',
     tag: 'Start here',
@@ -13,7 +43,7 @@ const SERVICES = [
     duration: '10 – 15 mins',
     price: '₹200',
     priceNote: 'per consultation',
-    accent: false,
+    variant: 'consultation',
   },
   {
     tier: 'Basic',
@@ -29,11 +59,11 @@ const SERVICES = [
     duration: '20 – 30 mins',
     price: '₹500',
     priceNote: 'per session',
-    accent: false,
+    variant: 'basic',
   },
   {
     tier: 'Standard',
-    tag: 'Combo session',
+    tag: 'Most chosen',
     description:
       'Choose any two therapies in a single session — targeted relief, doubled up.',
     items: [
@@ -46,7 +76,7 @@ const SERVICES = [
     duration: '40 – 55 mins',
     price: '₹1,000',
     priceNote: 'per session',
-    accent: true,
+    variant: 'standard',
   },
   {
     tier: 'Advance',
@@ -62,7 +92,7 @@ const SERVICES = [
     duration: '75 – 90 mins',
     price: '₹1,600',
     priceNote: 'per session',
-    accent: false,
+    variant: 'advance',
   },
 ]
 
@@ -96,115 +126,168 @@ export default function ServicesSection() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {SERVICES.map((s, i) => (
-            <motion.article
-              key={s.tier}
-              initial={{ opacity: 0, y: 0 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, ease: EASE, delay: i * 0.1 }}
-              className={`group relative flex flex-col rounded-sm border p-8 transition-all duration-300 ${
-                s.accent
-                  ? 'border-primary bg-primary text-on-primary shadow-[0_30px_60px_-20px_rgba(81,20,22,0.4)]'
-                  : 'border-outline-variant/60 bg-surface-container-low hover:border-primary/40'
-              }`}
-            >
-              <header className="mb-6 flex items-center justify-between">
-                <h3
-                  className={`font-headline text-3xl ${
-                    s.accent ? 'text-on-primary' : 'text-primary'
-                  }`}
-                >
-                  {s.tier}
-                </h3>
-                <span
-                  className={`rounded-full border px-3 py-1 font-label text-[10px] uppercase tracking-[0.18em] ${
-                    s.accent
-                      ? 'border-on-primary/40 text-on-primary/90'
-                      : 'border-outline-variant text-on-surface-variant'
-                  }`}
-                >
-                  {s.tag}
-                </span>
-              </header>
+        <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 md:gap-6 xl:grid-cols-4">
+          {SERVICES.map((s, i) => {
+            const isAdvance = s.variant === 'advance'
+            const isFeatured = s.variant === 'standard'
 
-              <p
-                className={`mb-6 text-sm leading-relaxed ${
-                  s.accent ? 'text-on-primary/80' : 'text-on-surface-variant'
-                }`}
+            return (
+              <motion.article
+                key={s.tier}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.55, ease: EASE, delay: i * 0.1 }}
+                className={`group relative flex h-full flex-col overflow-hidden rounded-md border transition-all duration-300 ${TIER_CARD_STYLES[s.variant]}`}
               >
-                {s.description}
-              </p>
+                <div
+                  className={`h-1.5 w-full bg-gradient-to-r ${TIER_ACCENT_STYLES[s.variant]}`}
+                  aria-hidden
+                />
 
-              <ul className="mb-8 space-y-2.5">
-                {s.items.map((item, i) => (
-                  <li
-                    key={item}
-                    className={`flex items-start gap-3 text-sm ${
-                      s.accent ? 'text-on-primary/90' : 'text-on-surface'
-                    }`}
-                  >
+                {isAdvance && (
+                  <div
+                    className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary-fixed/10 blur-2xl"
+                    aria-hidden
+                  />
+                )}
+
+                <span
+                  className={`pointer-events-none absolute right-5  font-headline text-9xl leading-none ${
+                    isAdvance
+                      ? 'text-on-primary/[0.07]'
+                      : 'text-primary/[0.06] group-hover:text-primary/[0.09]'
+                  }`}
+                  aria-hidden
+                >
+                  {i + 1}
+                </span>
+
+                <div className="relative flex min-h-0 flex-1 flex-col p-7 md:p-8">
+                  <header className="mb-5">
                     <span
-                      className={`mt-0.5 font-label text-[11px] tracking-widest ${
-                        s.accent ? 'text-on-primary/60' : 'text-on-surface-variant'
+                      className={`inline-flex rounded-full px-3 py-1 font-label text-[10px] uppercase tracking-[0.18em] ${
+                        isAdvance
+                          ? 'bg-on-primary/10 text-on-primary/90'
+                          : isFeatured
+                            ? 'bg-primary/10 text-primary'
+                            : 'bg-surface/70 text-on-surface-variant'
                       }`}
                     >
-                      0{i + 1}
+                      {s.tag}
                     </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              {'itemsNote' in s && s.itemsNote && (
-                <p
-                  className={`-mt-4 mb-8 text-sm italic ${
-                    s.accent ? 'text-on-primary/70' : 'text-on-surface-variant'
-                  }`}
-                >
-                  {s.itemsNote}
-                </p>
-              )}
+                    <h3
+                      className={`mt-4 font-headline text-[1.75rem] leading-tight tracking-tight ${
+                        isAdvance ? 'text-on-primary' : 'text-primary'
+                      }`}
+                    >
+                      {s.tier}
+                    </h3>
+                  </header>
 
-              <div
-                className={`mt-auto border-t pt-6 ${
-                  s.accent ? 'border-on-primary/20' : 'border-outline-variant/60'
-                }`}
-              >
-                <p
-                  className={`font-label text-[11px] uppercase tracking-widest ${
-                    s.accent ? 'text-on-primary/70' : 'text-on-surface-variant'
-                  }`}
-                >
-                  Session · {s.duration}
-                </p>
-                <div className="mt-2 flex items-baseline gap-2">
-                  <span
-                    className={`font-headline text-4xl ${
-                      s.accent ? 'text-on-primary' : 'text-primary'
+                  <p
+                    className={`mb-6 text-sm leading-relaxed ${
+                      isAdvance ? 'text-on-primary/80' : 'text-on-surface-variant'
                     }`}
                   >
-                    {s.price}
-                  </span>
-                  <span
-                    className={`text-sm ${
-                      s.accent ? 'text-on-primary/70' : 'text-on-surface-variant'
+                    {s.description}
+                  </p>
+
+                  <div
+                    className={`mb-6 flex flex-1 flex-col rounded-sm border px-4 py-4 ${
+                      isAdvance
+                        ? 'border-on-primary/15 bg-on-primary/[0.07]'
+                        : 'border-outline-variant/40 bg-surface/55'
                     }`}
                   >
-                    {s.priceNote}
-                  </span>
+                    <ul className="flex-1 space-y-2.5">
+                      {Array.from({ length: 4 }, (_, itemIndex) => {
+                        const item = s.items[itemIndex]
+                        const isPlaceholder = !item
+
+                        return (
+                          <li
+                            key={item ?? `placeholder-${itemIndex}`}
+                            className={`flex items-start gap-3 text-sm ${
+                              isPlaceholder
+                                ? 'pointer-events-none invisible select-none'
+                                : isAdvance
+                                  ? 'text-on-primary/90'
+                                  : 'text-on-surface'
+                            }`}
+                            aria-hidden={isPlaceholder}
+                          >
+                            <span
+                              className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full font-label text-[10px] ${
+                                isAdvance
+                                  ? 'bg-on-primary/10 text-on-primary/70'
+                                  : 'bg-primary/8 text-primary/70'
+                              }`}
+                            >
+                              {itemIndex + 1}
+                            </span>
+                            <span>{item ?? 'Placeholder item'}</span>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                    <p
+                      className={`mt-3 border-t pt-3 text-xs font-medium uppercase tracking-[0.14em] ${
+                        s.itemsNote
+                          ? isAdvance
+                            ? 'border-on-primary/15 text-on-primary/70'
+                            : 'border-outline-variant/50 text-primary/80'
+                          : 'pointer-events-none border-transparent text-transparent select-none'
+                      }`}
+                      aria-hidden={!s.itemsNote}
+                    >
+                      {s.itemsNote ?? 'Pick any 2 of the above'}
+                    </p>
+                  </div>
+
+                  <div
+                    className={`border-t pt-6 ${
+                      isAdvance ? 'border-on-primary/20' : 'border-outline-variant/50'
+                    }`}
+                  >
+                    <p
+                      className={`font-label text-[11px] uppercase tracking-widest ${
+                        isAdvance ? 'text-on-primary/70' : 'text-on-surface-variant'
+                      }`}
+                    >
+                      Session · {s.duration}
+                    </p>
+                    <div className="mt-2 flex items-baseline gap-2">
+                      <span
+                        className={`font-headline text-4xl tracking-tight ${
+                          isAdvance ? 'text-on-primary' : 'text-primary'
+                        }`}
+                      >
+                        {s.price}
+                      </span>
+                      <span
+                        className={`text-sm ${
+                          isAdvance ? 'text-on-primary/70' : 'text-on-surface-variant'
+                        }`}
+                      >
+                        {s.priceNote}
+                      </span>
+                    </div>
+                    <AppointmentCtaLink
+                      buttonName="Book Appointment"
+                      className={`mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 font-label text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-300 ${
+                        isAdvance
+                          ? 'bg-on-primary text-primary hover:bg-on-primary/90'
+                          : isFeatured
+                            ? 'bg-primary text-on-primary hover:opacity-90'
+                            : 'border border-primary/20 bg-surface/80 text-primary hover:border-primary/40 hover:bg-surface'
+                      }`}
+                    />
+                  </div>
                 </div>
-                <AppointmentCtaLink
-                  buttonName="Book Appointment"
-                  className={`mt-6 inline-flex items-center gap-2 font-label text-xs font-semibold uppercase tracking-[0.18em] ${
-                    s.accent
-                      ? 'text-on-primary'
-                      : 'text-primary'
-                  }`}
-                />
-              </div>
-            </motion.article>
-          ))}
+              </motion.article>
+            )
+          })}
         </div>
       </div>
     </section>
