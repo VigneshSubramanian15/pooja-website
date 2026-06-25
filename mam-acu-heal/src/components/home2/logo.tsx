@@ -28,7 +28,7 @@ export default function Logo({
           fontWeight="500"
           letterSpacing="1"
         >
-          MamAcuHeal
+          MAM Acuheal
         </text>
 
         <line
